@@ -36,9 +36,8 @@ const getToCurrency = () => {
 }
 
 /* display user actions (exchange rate, calculation) */
-
 const displayExchangeRate = (exRate) => {
- return exchangeRate.innerText = `${getToCurrency()}${exRate}`;
+ return exchangeRate.innerText = `${getToCurrency()} ${exRate}`;
 }
 
 const setSelectOptions = (display, value) => {
@@ -72,13 +71,13 @@ const getCurrency = () => {
  })
 }
 const getExchangeRate = () => {
- fetch ('https://free.currencyconverterapi.com/api/v5/convert?q=USD_PHP,PHP_USD&compact=ultra')
+ fetch (`https://free.currencyconverterapi.com/api/v5/convert?q=${currencyFrom.value}_${currencyTo.value},${currencyTo.value}_${currencyFrom.value}&compact=ultra`)
  .then ((response)=>{
    return response.json();
  })
  .then ((jsonResponse)=>{
    const currency = jsonResponse[`${getFromCurrency()}_${getToCurrency()}`];
-   displayExchangeRate((Math.round(currency*getAmount() * 100) / 100))
+   displayExchangeRate((Math.round(currency*getAmount() * 100) / 100));
  })
  .catch ((e)=>{
    notify.innerText = e;

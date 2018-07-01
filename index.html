@@ -3,102 +3,69 @@
   <head>
     <meta charset="utf-8">
     <title>Currency Converter</title>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="bootstrap/js/jquery.min.js"></script>
-    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
-
-    <style>
-      #main {
-        width: 50vw;
-        height: 20vh;
-        /* border: 1px solid #f4511e; */
-        margin: auto;
-        margin-top: 10%;
-      }
-
-      #form {
-        /* margin: auto; */
-        padding: 20px;
-      }
-
-      td {
-        padding-right: 2vw;
-      }
-
-      tr {
-        margin-bottom: 20px;
-      }
-    </style>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="css/master.css">
   </head>
 
   <body>
-    <div id="main">
-      <form class="" action="index.html" method="post" id="form">
-        <table>
-          <tr>
-            <td>
-              <div class="form-group">
-                <label for="">Convert from:</label>
-                <select class="form-control currency" id="currencyFrom">
-                  </select>
-              </div>
-            </td>
-            <td>
-              <div class="form-group">
-                  <label for="">Enter value</label>
-                  <input type="text" class="form-control" id="inputAmount">
-              </div>
-            </td>
+    <form class="" method="post" id="form">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Currency Converter</h3>
+      </div>
+      <div class="panel-body">
+        <div>
+            <table>
+              <tr>
+                <td>
+                    <label for="">Convert from:</label>
+                    <select class="form-control currency" id="currencyFrom">
+                      </select>
+                </td>
 
-            <td>
-                <div class="form-group">
-                  <label for="">Convert To:</label>
-                  <select class="form-control currency" id="currencyTo">
-                    </select>
-                </div>
-              </td>
+                <td>
+                      <label for="">Convert To:</label>
+                      <select class="form-control currency" id="currencyTo">
+                        </select>
 
-          </tr>
+                  </td>
 
-          <tr>
-            <td id="output">
+              </tr>
+              </table>
+              <table>
+                <tr>
+                      <label for="">Enter value</label>
+                      <input type="text" class="form-control" id="inputAmount">
+                </tr>
+                <tr>
+                  <input type="button" name="" class="btn btn-lg" value="Convert" id="convertButton">
+                <!--  <button type="button" name="button" class="btn btn-sm" id="convertButton">Convert</button>-->
+                </tr>
+              </table>
 
-            </td>
-          </tr>
-          <button type="button" name="button" class="btn btn-lg" id="convertButton">Convert</button>
-        </table>
+          <div class="notification">
 
-
-      </form>
-      <div class="notification">
+          </div>
+        </div>
+      </div><!--Panel body-->
+      <div class="panel-footer" id="output">
 
       </div>
-    </div>
-
-    <script type="text/javascript">
-
-fetch ('https://free.currencyconverterapi.com/api/v5/currencies')
-.then ((response)=>{
-  return response.json();
-})
-.then ((jsonResponse)=>{
-  const currency = jsonResponse.results;
- const getSelect = document.querySelectorAll('.currency');
-//const getSelect = document.getElementById('from');
-
-  for(let key in currency){
-            for (let option of getSelect){
-  option.innerHTML += `<option value='${currency[key].id}'> ${currency[key].currencyName}</option>`;
-              }
-  }
-})
-.catch ((e)=>{
-  notify.innerText = e;
-})
-
-    </script>
+    </div><!--close panel-->
+</form>
 <script type="text/javascript" src="js/api.js">
-
+</script>
+<script type="text/javascript" src="js/registerSW.js">
+</script>
+<script type="text/javascript" src="js/sw.js">
+</script>
+<script type="text/javascript">
+ServiceWorker();
 </script>
   </body>
 </html>

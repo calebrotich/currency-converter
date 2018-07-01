@@ -1,0 +1,44 @@
+.panel {
+  width: 50vw;
+  border: 1px solid #f4511e;
+  margin: auto;
+  margin-top: 10%;
+}
+
+#form {
+  /* margin: auto; */
+  padding: 20px;
+}
+
+td {
+  padding-right: 2vw;
+}
+
+tr {
+  margin-bottom: 20px;
+}
+
+.panel-heading, .panel-footer {
+  background-color: #f4511e !important;
+  color: white !important;
+}
+
+.panel-footer {
+  min-height: 10vh;
+}
+
+input {
+  margin-bottom: 20px;
+}
+
+#convertButton {
+  background-color: #f4511e;
+  color: white;
+  border: 1px solid #f4511e;
+}
+
+#convertButton:hover {
+  background-color: white;
+  color: #f4511e;
+  border: 1px solid #f4511e;
+}
