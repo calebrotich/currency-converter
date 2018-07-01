@@ -80,7 +80,7 @@ const getExchangeRate = () => {
    displayExchangeRate((Math.round(currency*getAmount() * 100) / 100));
  })
  .catch ((e)=>{
-   notify.innerText = e;
+   notify.innerText = `You are offline ${e}`;
  })
 }
 const checkData = () => {

@@ -7,7 +7,7 @@ const cachableAPI = [
   'https://free.currencyconverterapi.com/api/v5/countries',
   'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css',
   'https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js',
-  'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js'
+  'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js`'
 ];
 
 const cachableFiles = [
@@ -15,7 +15,8 @@ const cachableFiles = [
   './index.html',
   './css/master.css',
   './js/api.js',
-  './js/registerSW.js'
+  './js/registerSW.js',
+  './js/indexedDB.js'
 ]
 
 self.addEventListener('install', (event) => {
