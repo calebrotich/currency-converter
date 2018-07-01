@@ -1,8 +1,12 @@
-const ServiceWorker = () => {
+function ServiceWorker() {
   if (!navigator.serviceWorker) return toast('Service Worker not supported');
-
-  navigator.serviceWorker.register('./sw.js', {scope: './'})
-  .then((registration) => {
+  navigator.serviceWorker.register('sw.js').then(function() {
+    console.log("Reg worked!")
+  }).catch(function() {
+    console.log("failed!")
+  });
+}
+/*  .then((registration) => {
   console.log('sw process');
       // checking if controller is true/false
       if (!navigator.serviceWorker.controller) return;
@@ -12,6 +16,7 @@ const ServiceWorker = () => {
         registration.waiting.postMessage('skipWaiting');
         return;
       }
+
       if (registration.installing){
         serviceWorkerInstallation(registration.installing) ;
         return;
@@ -33,3 +38,4 @@ const serviceWorkerInstallation = (status) =>{
     }
   })
 }
+*/
