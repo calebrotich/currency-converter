@@ -64,7 +64,7 @@
 </script>-->
 <script type="text/javascript">
   if('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').then(reg => {console.log('success');}).catch(function(err) {console.log(err);})
+    navigator.serviceWorker.register('./sw.js').then(reg => {console.log('SW registration success');}).catch(function(err) {console.log(err);})
   }
 </script>
 

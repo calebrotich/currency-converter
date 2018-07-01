@@ -1,92 +1,74 @@
-var staticCacheName = 'converter-v1';
-var allCaches = [
-  staticCacheName
+const cacheVersion = '1.0';
+const cacheName = 'currencyConverter.io';
+const cachNameVersion= `${cacheName}-${cacheVersion}`;
+
+const cachableAPI = [
+  'https://free.currencyconverterapi.com/api/v5/currencies',
+  'https://free.currencyconverterapi.com/api/v5/countries'
 ];
 
-self.addEventListener('install', function(event) {
+const cachableFiles = [
+  './',
+  './index.html',
+  './css/master.css',
+  './js/api.js',
+  './js/registerSW.js'
+]
+
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(staticCacheName).then(function(cache) {
-      return cache.addAll([
-        '/skeleton',
-        'js/api.js',
-        'css/master.css'
-      ]);
+    //get cache first time
+    caches.open(cachNameVersion)
+    .then((cache) => {
+      return cache.addAll(cachableFiles.concat(cachableAPI))
     })
   );
 });
 
-self.addEventListener('activate', function(event) {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(function(cacheNames) {
-      return Promise.all(
-        cacheNames.filter(function(cacheName) {
-          return cacheName.startsWith('converter-') &&
-                 !allCaches.includes(cacheName);
-        }).map(function(cacheName) {
-          return caches.delete(cacheName);
-        })
-      );
+    //activate new cache
+    caches.keys()
+    .then( (keys) => {
+        return Promise.all(keys.map((key, i) => {
+          if(key !== cachNameVersion){
+            return caches.delete(keys[i]);
+          }
+      }))
     })
-  );
+  )
 });
 
-self.addEventListener('fetch', function(event) {
-  var requestUrl = new URL(event.request.url);
-
-  if (requestUrl.origin === location.origin) {
-    if (requestUrl.pathname === '/') {
-      event.respondWith(caches.match('/skeleton'));
-      return;
-    }
-  /*  if (requestUrl.pathname.startsWith('/photos/')) {
-      event.respondWith(servePhoto(event.request));
-      return;
-    }
-    if (requestUrl.pathname.startsWith('/avatars/')) {
-      event.respondWith(serveAvatar(event.request));
-      return;
-    }*/
-  }
+self.addEventListener('fetch', (event) => {
+  let url = event.request.clone();
 
   event.respondWith(
-    caches.match(event.request).then(function(response) {
-      return response || fetch(event.request);
+    caches.match(event.request)
+    .then((res) => {
+      if(res){
+        return res;
+      }
+      return fetch(url)
+      .then((res) => {
+        if(!res || res.status !== 200 || res.type !== 'basic'){
+          return res;
+        }
+        let response = res.clone();
+        caches.open(cachNameVersion)
+        .then((cache) => {
+          cache.put(event.request, response);
+        });
+        return res;
+      })
     })
-  );
+  )
 });
 
-/*function serveAvatar(request) {
-  var storageUrl = request.url.replace(/-\dx\.jpg$/, '');
-
-  return caches.open(contentImgsCache).then(function(cache) {
-    return cache.match(storageUrl).then(function(response) {
-      var networkFetch = fetch(request).then(function(networkResponse) {
-        cache.put(storageUrl, networkResponse.clone());
-        return networkResponse;
-      });
-
-      return response || networkFetch;
-    });
-  });
-}
-
-function servePhoto(request) {
-  var storageUrl = request.url.replace(/-\d+px\.jpg$/, '');
-
-  return caches.open(contentImgsCache).then(function(cache) {
-    return cache.match(storageUrl).then(function(response) {
-      if (response) return response;
-
-      return fetch(request).then(function(networkResponse) {
-        cache.put(storageUrl, networkResponse.clone());
-        return networkResponse;
-      });
-    });
-  });
-}*/
-
-self.addEventListener('message', function(event) {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
+self.addEventListener('message', messageEvent => {
+  if (messageEvent.data === 'skipWaiting') return skipWaiting();
 });
+
+self.addEventListener('controllerchange', () => {
+  console.log('done')
+    window.location.assign('./');
+})
